@@ -28,7 +28,14 @@ jobs:
       - name: Push images
         run: docker compose push
 
-      # - name: XXX
+      - name: Deploy
+        run: |
+          kubectl config set-cluster xx_cluster --server="${{ secrets.YDX_ADDR }}" --insecure-skip-tls-verify=true
+          kubectl config set-credentials "{{ secrets.YDX_LOGIN }}" --token="${{ secrets.YDX_TOKEN }}"
+          kubectl config set-context default --cluster=xx_cluster --user="{{ secrets.YDX_LOGIN }}"
+          kubectl config use-context default
+          helm delete trash3 || true
+          helm install trash3 ./myhelm2/
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master

@@ -16,7 +16,7 @@ app = flask.Flask(__name__)
 while True:
     try:
         conn = psycopg2.connect(
-            host="postgres",
+            host=services.DATABASE_ADDR,
             database="reservations",
             user="program",
             password="test")

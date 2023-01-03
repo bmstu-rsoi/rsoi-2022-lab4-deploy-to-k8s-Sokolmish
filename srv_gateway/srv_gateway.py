@@ -16,7 +16,7 @@ app = flask.Flask(__name__)
 
 @app.route('/api/v1/hotels', methods=['GET'])
 def hotelsRoute():
-    page = int(flask.request.args.get('page', '0'))
+    page = int(flask.request.args.get('page', '1'))
     size = int(flask.request.args.get('size', '100'))
     r = requests.get(f'{services.RESERVATION_ADDR}/all_hotels?page={page}&size={size}')
     if r.status_code != status.HTTP_200_OK:

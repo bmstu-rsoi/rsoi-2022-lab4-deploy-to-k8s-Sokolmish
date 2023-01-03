@@ -1,0 +1,4 @@
+image:
+  repository: sokolmish/spread-gw
+  tag: latest
+  pullPolicy: IfNotPresent
