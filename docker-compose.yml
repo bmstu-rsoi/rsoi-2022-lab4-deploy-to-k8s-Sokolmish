@@ -1,20 +1,21 @@
 version: "3"
 services:
-  postgres:
-    image: library/postgres:13
-    container_name: postgres
-    restart: on-failure
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./postgres/:/docker-entrypoint-initdb.d/
-    ports:
-      - "5432:5432"
+  # postgres:
+  #   image: library/postgres:13
+  #   container_name: postgres
+  #   restart: on-failure
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: "postgres"
+  #     POSTGRES_DB: postgres
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data
+  #     - ./postgres/:/docker-entrypoint-initdb.d/
+  #   ports:
+  #     - "5432:5432"
 
   spread_loyalty:
+    image: sokolmish/spread-loyalty
     build:
       context: ./
       dockerfile: Dockerfile.loyalty
@@ -22,10 +23,11 @@ services:
     restart: on-failure
     ports:
       - "8050:8050"
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
 
   spread_payment:
+    image: sokolmish/spread-payment
     build:
       context: ./
       dockerfile: Dockerfile.payment
@@ -33,10 +35,11 @@ services:
     restart: on-failure
     ports:
       - "8060:8060"
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
 
   spread_reservation:
+    image: sokolmish/spread-reservation
     build:
       context: ./
       dockerfile: Dockerfile.reservation
@@ -44,10 +47,11 @@ services:
     restart: on-failure
     ports:
       - "8070:8070"
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
 
   spread_gateway:
+    image: sokolmish/spread-gw
     build:
       context: ./
       dockerfile: Dockerfile.gateway
@@ -55,10 +59,10 @@ services:
     restart: on-failure
     ports:
       - "8080:8080"
-    depends_on:
-      - spread_loyalty
-      - spread_payment
-      - spread_reservation
+    # depends_on:
+    #   - spread_loyalty
+    #   - spread_payment
+    #   - spread_reservation
 
 volumes:
   db-data:
