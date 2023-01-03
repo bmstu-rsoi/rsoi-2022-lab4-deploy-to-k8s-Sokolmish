@@ -36,6 +36,7 @@ jobs:
           kubectl config use-context default
           helm delete trash3 || true
           helm install trash3 ./myhelm2/
+          sleep 60
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
